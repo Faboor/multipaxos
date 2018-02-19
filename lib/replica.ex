@@ -41,11 +41,19 @@ defmodule Replica do
         {:decision, slot, decided_cmd} ->
           {proposed_cmd, proposals} = Map.pop(proposals, slot)
 
-          {
-            (if proposed_cmd != decided_cmd, do: MapSet.put(requests, proposed_cmd), else: requests),
-            proposals,
-            Map.put_new(decisions, slot, decided_cmd)
-          }
+          if proposed_cmd != decided_cmd do
+            {
+              MapSet.put(requests, proposed_cmd),
+              proposals,
+              Map.put_new(decisions, slot, decided_cmd)
+            }
+          else
+            {
+              requests,
+              proposals,
+              Map.put_new(decisions, slot, decided_cmd)
+            }
+          end
       end
 
     slot_out = perform(slot_out, decisions, db)

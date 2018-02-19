@@ -6,6 +6,7 @@ defmodule Commander do
       for r <- replicas, do: send(r, {:decision, slot, cmd})
       Process.exit(self(), :normal)
     end
+
     receive do
       {:p2b, other_ballot} ->
         if ballot == other_ballot do
