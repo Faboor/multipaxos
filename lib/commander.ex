@@ -20,6 +20,6 @@ defmodule Commander do
 
   def start(leader, acceptors, replicas, pval) do
     for a <- acceptors, do: send(a, {:p2a, self(), pval})
-    next(leader, Float.ceil((length(acceptors) + 1) / 2), replicas, pval)
+    next(leader, div(length(acceptors) + 1, 2), replicas, pval)
   end
 end

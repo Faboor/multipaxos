@@ -20,6 +20,6 @@ defmodule Scout do
 
   def start(leader, acceptors, ballot) do
     for a <- acceptors, do: send(a, {:p1a, self(), ballot})
-    next(leader, Float.ceil((lenght(acceptors) + 1) / 2), ballot, MapSet.new())
+    next(leader, div(length(acceptors) + 1, 2), ballot, MapSet.new())
   end
 end

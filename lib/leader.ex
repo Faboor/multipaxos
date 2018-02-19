@@ -5,7 +5,7 @@ defmodule Leader do
     slot_to_ballot_and_command =
       List.foldl(Map.to_list(pvals), Map.new(), fn {ballot, slot, cmd}, res ->
         Map.update(res, slot, {ballot, cmd}, fn {ballot2, cmd2} ->
-          if ballot > ballot2, do: cmd, else: cmd2
+          if ballot > ballot2, do: {ballot, cmd}, else: {ballot2, cmd2}
         end)
       end)
 
@@ -58,7 +58,7 @@ defmodule Leader do
   end
 
   def start(config) do
-    recieve do
+    receive do
       {:bind, replicas, acceptors} ->
         spawn(Scout, :start, [self(), acceptors, {0, config.server_num}])
         next({0, config.server_num}, false, Map.new(), replicas, acceptors)
