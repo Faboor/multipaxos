@@ -3,7 +3,7 @@ defmodule Leader do
 
   defp pmax(pvals) do
     slot_to_ballot_and_command =
-      List.foldl(Map.to_list(pvals), Map.new(), fn {ballot, slot, cmd}, res ->
+      List.foldl(MapSet.to_list(pvals), Map.new(), fn {ballot, slot, cmd}, res ->
         Map.update(res, slot, {ballot, cmd}, fn {ballot2, cmd2} ->
           if ballot > ballot2, do: {ballot, cmd}, else: {ballot2, cmd2}
         end)
@@ -58,10 +58,11 @@ defmodule Leader do
   end
 
   def start(config) do
+    ballot = {0, config.server_num}
     receive do
-      {:bind, replicas, acceptors} ->
-        spawn(Scout, :start, [self(), acceptors, {0, config.server_num}])
-        next({0, config.server_num}, false, Map.new(), replicas, acceptors)
+      {:bind, acceptors, replicas} ->
+        spawn(Scout, :start, [self(), acceptors, ballot])
+        next(ballot, false, Map.new(), replicas, acceptors)
     end
   end
 end

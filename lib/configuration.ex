@@ -20,9 +20,10 @@ defmodule Configuration do
       # max amount moved between accounts
       max_amount: 1000,
       # print transaction log summary every print_after msecs
-      print_after: 1_000
+      print_after: 1_000,
 
-      # add your own here
+      # max proposal pending per replica
+      window: 3
     }
   end
 

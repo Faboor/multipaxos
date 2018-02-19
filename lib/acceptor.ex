@@ -13,7 +13,7 @@ defmodule Acceptor do
           send(leader, {:p2b, ballot})
 
           if received_ballot == ballot do
-            {ballot, Map.put(accepted, slot, {ballot, cmd})}
+            {ballot, MapSet.put(accepted, {ballot, slot, cmd})}
           else
             {ballot, accepted}
           end
@@ -23,6 +23,6 @@ defmodule Acceptor do
   end
 
   def start(config) do
-    next({-1, -1}, Map.new())
+    next({-1, -1}, MapSet.new())
   end
 end
