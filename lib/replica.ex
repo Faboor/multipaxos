@@ -1,3 +1,5 @@
+# Author: Peter Kovary <pk3115@ic.ac.uk>
+
 defmodule Replica do
   @moduledoc false
 
