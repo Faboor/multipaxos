@@ -1,3 +1,6 @@
+# this is auto-generated anyway by the makefile
+docker-compose.yml
+
 # The directory Mix will write compiled artifacts to.
 /_build/
 

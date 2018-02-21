@@ -24,7 +24,7 @@ defmodule Acceptor do
     next(ballot, accepted)
   end
 
-  def start(config) do
+  def start(_) do
     next({-1, -1}, MapSet.new())
   end
 end

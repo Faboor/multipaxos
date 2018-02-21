@@ -12,7 +12,7 @@ defmodule Leader do
       end)
 
     slot_to_command =
-      List.foldl(Map.to_list(slot_to_ballot_and_command), Map.new(), fn {slot, {ballot, cmd}},
+      List.foldl(Map.to_list(slot_to_ballot_and_command), Map.new(), fn {slot, {_, cmd}},
                                                                         slot_to_cmd ->
         Map.put(slot_to_cmd, slot, cmd)
       end)
@@ -43,12 +43,12 @@ defmodule Leader do
 
           {true, ballot, proposals_}
 
-        {:preemted, other_ballot} ->
+        {:preempted, other_ballot} ->
           if other_ballot > ballot do
             {other_ballot_num, _} = other_ballot
             {_, server_num} = ballot
             ballot = {other_ballot_num + 1, server_num}
-            # possible sleep
+            Process.sleep(100) #10 + :rand.uniform(90)) # possible sleep
             spawn(Scout, :start, [self(), acceptors, ballot])
             {false, ballot, proposals}
           else

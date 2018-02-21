@@ -14,7 +14,7 @@ defmodule Commander do
         if ballot == other_ballot do
           next(leader, waitfor - 1, replicas, {ballot, slot, cmd})
         else
-          send(leader, {:preemted, other_ballot})
+          send(leader, {:preempted, other_ballot})
           Process.exit(self(), :normal)
         end
     end
