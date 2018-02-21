@@ -4,21 +4,9 @@ defmodule Leader do
   @moduledoc false
 
   defp pmax(pvals) do
-    slot_to_ballot_and_command =
-      List.foldl(MapSet.to_list(pvals), Map.new(), fn {ballot, slot, cmd}, res ->
-        Map.update(res, slot, {ballot, cmd}, fn {ballot2, cmd2} ->
-          if ballot > ballot2, do: {ballot, cmd}, else: {ballot2, cmd2}
-        end)
-      end)
-
-    slot_to_command =
-      List.foldl(Map.to_list(slot_to_ballot_and_command), Map.new(), fn {slot, {_, cmd}},
-                                                                        slot_to_cmd ->
-        Map.put(slot_to_cmd, slot, cmd)
-      end)
-
-    slot_to_command
-    # TODO: do it in the acceptors and scouts
+    List.foldl(Map.to_list(pvals), Map.new(), fn {slot, {_, cmd}}, slot_to_cmd ->
+      Map.put(slot_to_cmd, slot, cmd)
+    end)
   end
 
   defp next(ballot, active, proposals, replicas, acceptors) do
