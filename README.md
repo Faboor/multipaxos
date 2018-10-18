@@ -5,7 +5,7 @@ Peter Kovary
 Contributions marked at the beginning if each file
 
 ### Compile and run options
-
+```
 make compile	- compile
 make clean	- remove compiled code
 
@@ -25,5 +25,5 @@ make show	- list docker containers and networks
 make ssh_up	- run on real hosts via ssh (omitted) 
 make ssh_down	- kill nodes on real network (omitted)
 make ssh_show	- show running nodes on real network (omitted)
-
+```
 
