@@ -1,8 +1,10 @@
 
-# distributed algorithms, n.dulay, 2 feb 18
-# coursework 2, multi-paxos
+# Distributed algorithms CW2
+Peter Kovary
 
-# compile and run options
+Contributions marked at the beginning if each file
+
+### Compile and run options
 
 make compile	- compile
 make clean	- remove compiled code
